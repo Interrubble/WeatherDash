@@ -1,0 +1,16 @@
+
+p {
+    font-size: 14px;
+}
+
+header {
+    background-image: linear-gradient(to right, blue, violet)
+}
+
+#weatherSearch {
+    border-bottom: 3px dotted black;
+}
+
+#search {
+    background-color: lightblue;
+}

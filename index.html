@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header class="container-fluid text-light mb-5 p-3">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1>Your Weather Dashboard</h1>
+        </div>
+    </header>
+    <section class="container-fluid">
+        <section class="row">
+            <aside class="col-12 col-md-4 col-xl-3">
+                <div id="weatherSearch" class="pb-1 mb-3 border-dark">
+                    <h2>Search for a City:</h2>
+                    <input class="col-12 mb-3" type="text" id="searchbox" placeholder="Name of City">
+                    <input class="col-12 mb-3 border-0 p-1 rounded text-white" type="submit" id="search" value="Search">
+                </div>
+                <div id="buttonlist">
+                </div>
+            </aside>
+            <main class="col-12 col-md-8 col-xl-9">
+                <section class="container">
+                    <section class="row">
+                        <section id="weatherToday" class="card col-12 bg-white border pb-3">
+                            <h2>Please enter a city to search!</h2>
+                            <p class="card-text"></p>
+                            <p class="card-text"></p>
+                            <p class="card-text"></p>
+                            <p class="card-text"></p>
+                        </section>
+                    </section>
+                    <section id="fiveday">
+                        <div class="row">
+                            <h3 class="my-3 mx-2">5 Day Forecast:</h3>
+                        </div>
+                        <div id="forecast" class="row justify-content-around">
+                        </div>
+                    </section>
+                </section>
+            </main>
+        </section>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+
+</html>
