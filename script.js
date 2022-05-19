@@ -1,17 +1,17 @@
 var APIKey = '92dcd99075e42747c6a9b09497364593';
 var city;
 var date = moment().format('M/DD/YYYY');
-var storedArray = [];
+var locationArray = [];
 var buttonList = $('#buttonlist');
 var forecastCardDiv = $('#forecast')
 
 // Retrieve local storage and load on page load
 function getLocalStorage() {
-    var downloadedPlaces = JSON.parse(localStorage.getItem("places"));
-    if (downloadedPlaces !== null) {
-        storedArray = downloadedPlaces;
-        for (let i = storedArray.length-1; i >= 0; i--) {
-            let currentEl = storedArray[i];
+    var savedLocations = JSON.parse(localStorage.getItem("places"));
+    if (savedLocations !== null) {
+        locationArray = savedLocations;
+        for (let i = locationArray.length-1; i >= 0; i--) {
+            let currentEl = locationArray[i];
             var button = $('<button>');
             button.addClass("col-12 mb-3 border-0 rounded p-1");
             button.css('background', '#ADAEAE');
@@ -42,9 +42,9 @@ function pageLoad () {
 
                 function fetchForecast() {
 
-                    var forecastRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
+                    var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
                 
-                    fetch(forecastRequest)
+                    fetch(weatherRequest)
                         .then(function (response) {
                             if (!response.ok) {
                             throw response.json();
@@ -74,18 +74,18 @@ function pageLoad () {
                             for (let i = 1; i < 6; i++) {
                                 let currentDay = dailyForecast[i];
                                 var unix = currentDay.dt;
-                                var forecastedDate = moment.unix(unix).format('M/DD/YYYY');
-                                var forecastedTemp = currentDay.temp.day  + "\xB0 F";
-                                var forecastedWind = currentDay.wind_speed + " MPH";
-                                var forecastedHumidity = currentDay.humidity + " %";
-                                var forecastedIcon = currentDay.weather[0].icon;
+                                var weatherDate = moment.unix(unix).format('M/DD/YYYY');
+                                var weatherTemp = currentDay.temp.day  + "\xB0 F";
+                                var weatherWind = currentDay.wind_speed + " MPH";
+                                var weatherHumidity = currentDay.humidity + " %";
+                                var weatherIcon = currentDay.weather[0].icon;
 
-                                var forecastIconURL = 'https://openweathermap.org/img/wn/' + forecastedIcon + '@2x.png';
+                                var forecastIconURL = 'https://openweathermap.org/img/wn/' + weatherIcon + '@2x.png';
 
                                 var iconEl = $(`<img id="icon" alt="weather icon">`);
                                 iconEl.attr('src', forecastIconURL);
 
-                                createForecastCard(forecastedDate, forecastedTemp, forecastedWind, forecastedHumidity, iconEl)
+                                createForecastCard(weatherDate, weatherTemp, weatherWind, weatherHumidity, iconEl)
                             }
                         })
                 }
@@ -99,7 +99,7 @@ $('#search').on("click", function (event) {
     event.preventDefault();
     city = $('#searchbox').val().trim();
     city=city.charAt(0).toUpperCase() + city.slice(1);
-    function fetchLatLon() {
+    function fetchLocation() {
         var requestURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=92dcd99075e42747c6a9b09497364593";
     
         fetch(requestURL)
@@ -117,9 +117,9 @@ $('#search').on("click", function (event) {
 
                 function fetchForecast() {
 
-                    var forecastRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
+                    var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
                 
-                    fetch(forecastRequest)
+                    fetch(weatherRequest)
                         .then(function (response) {
                             if (!response.ok) {
                             throw response.json();
@@ -159,10 +159,10 @@ $('#search').on("click", function (event) {
                             function setLocalStorage() {
                                 var storedPlaces = JSON.parse(localStorage.getItem("places"));
                                 if (storedPlaces !== null) {
-                                    storedArray = storedPlaces;
+                                    locationArray = storedPlaces;
                                 }
-                                storedArray.push(city);
-                                localStorage.setItem("places", JSON.stringify(storedArray));
+                                locationArray.push(city);
+                                localStorage.setItem("places", JSON.stringify(locationArray));
                             }
                             setLocalStorage();
                             
@@ -178,7 +178,7 @@ $('#search').on("click", function (event) {
                 fetchForecast();
             })
     }
-    fetchLatLon();
+    fetchLocation();
     $('#searchbox').val('');    
 })
 
@@ -186,7 +186,7 @@ $('#search').on("click", function (event) {
 buttonList.on("click", function (event) {
     var buttonID = event.target.id;
     city = buttonID; 
-    function fetchLatLon() {
+    function fetchLocation() {
         var requestURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=92dcd99075e42747c6a9b09497364593";
     
         fetch(requestURL)
@@ -204,9 +204,9 @@ buttonList.on("click", function (event) {
 
                 function fetchForecast() {
 
-                    var forecastRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
+                    var weatherRequest = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&exclude=minutely,hourly,alerts&units=imperial&appid=" + APIKey;
                 
-                    fetch(forecastRequest)
+                    fetch(weatherRequest)
                         .then(function (response) {
                             if (!response.ok) {
                             throw response.json();
@@ -254,7 +254,7 @@ buttonList.on("click", function (event) {
                 fetchForecast();
             })
     }
-    fetchLatLon()
+    fetchLocation()
 })    
 
 function postCurrentWeather(city, temp, wind, humidity, uvi, code) {
@@ -291,7 +291,7 @@ function postCurrentWeather(city, temp, wind, humidity, uvi, code) {
 function createForecastCard (date, temp, wind, humidity, icon) {
     var forecastCard = $('<div>');
     forecastCard.addClass("card col-md-2 text-white p-3");
-    forecastCard.css('background-image', 'linear-gradient(to right, #2959c1, #261F6C)');
+    forecastCard.css('background-image', 'linear-gradient(to right, blue, violet)');
     var forecastDate = $('<h5>');
     forecastDate.text(date);
     forecastDate.css('font-weight', 'bold');
