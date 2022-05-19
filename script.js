@@ -256,3 +256,55 @@ buttonList.on("click", function (event) {
     }
     fetchLatLon()
 })    
+
+function postCurrentWeather(city, temp, wind, humidity, uvi, code) {
+    var iconURL = 'https://openweathermap.org/img/wn/' + code + '@2x.png';                       
+    var icon = $(`<img id="icon" alt="weather icon">`);
+    icon.attr('src', iconURL);
+    var spanIcon = $('<span>');
+    spanIcon.append(icon);
+    var todaysWeather = $('#weatherToday')
+    todaysWeather.children().eq(0).text(city + ' ' + date + ' ');
+    todaysWeather.children().eq(0).css('font-weight', 'bold');
+    todaysWeather.children().eq(1).text('Temp: ' + temp);
+    todaysWeather.children().eq(2).text('Wind: ' + wind);
+    todaysWeather.children().eq(3).text('Humidity: ' + humidity);
+
+    var UVbox = $('<span>');
+    if (uvi < 3) {
+        UVbox.css("background", "green");
+    } else if (3 <= uvi < 8) {
+        UVbox.css("background", "yellow");
+        UVbox.css("color", "black");
+    } else {
+        UVbox.css("background", "red");
+        UVbox.css("color", "black");
+    }
+    UVbox.css("color", "white");
+    UVbox.addClass("p-1");
+    UVbox.text(uvi);
+    todaysWeather.children().eq(4).text('UV Index: ');
+    todaysWeather.children().eq(4).append(UVbox);
+    todaysWeather.children().eq(0).append(spanIcon);
+}
+
+function createForecastCard (date, temp, wind, humidity, icon) {
+    var forecastCard = $('<div>');
+    forecastCard.addClass("card col-md-2 text-white p-3");
+    forecastCard.css('background-image', 'linear-gradient(to right, #2959c1, #261F6C)');
+    var forecastDate = $('<h5>');
+    forecastDate.text(date);
+    forecastDate.css('font-weight', 'bold');
+    var forecastTemp = $('<p>');
+    forecastTemp.text('Temp: ' + temp);
+    var forecastWind = $('<p>');
+    forecastWind.text('Wind: ' + wind);
+    var forecastHumidity = $('<p>');
+    forecastHumidity.text('Humidity: ' + humidity);
+    forecastCard.append(forecastDate);
+    forecastCard.append(icon)
+    forecastCard.append(forecastTemp);
+    forecastCard.append(forecastWind);
+    forecastCard.append(forecastHumidity);
+    forecastCardDiv.append(forecastCard);
+}
